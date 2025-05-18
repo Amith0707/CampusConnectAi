@@ -1,0 +1,35 @@
+# Ignore Python and Jupyter notebook cache
+__pycache__/
+*.py[cod]
+*.ipynb_checkpoints
+
+# Ignore system files
+.DS_Store
+
+# Ignore Node.js dependencies in server
+server/node_modules/
+
+# Ignore environment files
+.env
+.env.local
+
+# Ignore VSCode/IDE/editor settings
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# Logs
+*.log
+logs/
+npm-debug.log*
+
+# Ignore build output
+server/dist/
+client/dist/
+
+# Ignore OS generated files
+Thumbs.db
+ehthumbs.db
