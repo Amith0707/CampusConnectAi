@@ -1,0 +1,31 @@
+.feature-card {
+  background: #1e1e1e;
+  border-radius: 16px;
+  padding: 2rem;
+  max-width: 300px;
+  color: white;
+  box-shadow: 0 8px 24px rgba(155, 89, 182, 0.3);
+  transition: transform 0.3s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 12px 30px rgba(155, 89, 182, 0.6);
+}
+
+.feature-icon {
+  font-size: 3rem;
+  color: #9b59b6; /* neon purple */
+  margin-bottom: 1rem;
+}
+
+.feature-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.feature-desc {
+  font-size: 1rem;
+  color: #ccc;
+}
