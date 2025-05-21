@@ -2,6 +2,8 @@
 
 import Participant from '../models/participant.js';
 import bcrypt from 'bcryptjs';
+/*Adding JWT Token For securing connection when useres come into my website*/
+import jwt from 'jsonwebtoken';
 
 // Signup controller basically for sign in it is 
 export const registerParticipant = async (req, res) => {
@@ -51,8 +53,15 @@ export const loginParticipant = async (req, res) => {
       return res.status(400).json({ message: 'Invalid email or password' });
     }
 
+    // Generate JWT token
+    const token = jwt.sign(
+      { userId: user._id, email: user.email }, 
+      process.env.JWT_SECRET,
+      { expiresIn:'7d'}
+    );
+
     // If login successful, respond with user info (later add JWT here)
-    res.status(200).json({ message: 'Login successful', userId: user._id, name: user.name });
+    res.status(200).json({ message: 'Login successful',token, userId: user._id, name: user.name });
   } catch (error) {
     console.error('Login error:', error);
     res.status(500).json({ message: 'Server error during login' });
