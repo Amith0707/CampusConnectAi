@@ -14,8 +14,7 @@ const Home = () => {
       <section className="hero-section">
         <div className="hero-text">
           <h1 className="hero-title">
-            Welcome to{' '}
-            <span className="neon-underline">CampusConnect</span>
+            Welcome to <span className="neon-underline">CampusConnect</span>
           </h1>
           <p className="hero-subtitle">
             Your one-stop platform for event discovery, participation tracking, and personalized college experiences.
@@ -23,12 +22,17 @@ const Home = () => {
           <button className="btn btn-primary">Explore Events</button>
         </div>
 
-        {/* Floating abstract shapes */}
-        <div className="floating-shapes">
-          {/* You can add SVG blobs or colored divs */}
-          <div className="blob purple"></div>
-          <div className="blob blue"></div>
-          <div className="blob green"></div>
+        {/* Animated Orbiting Blobs */}
+        <div className="blob-orbit-container">
+          <div className="orbit orbit1">
+            <div className="blob purple"></div>
+          </div>
+          <div className="orbit orbit2">
+            <div className="blob blue"></div>
+          </div>
+          <div className="orbit orbit3">
+            <div className="blob green"></div>
+          </div>
         </div>
       </section>
 
