@@ -18,6 +18,7 @@ const Navbar = () => {
         <div className="navbar-buttons">
           <button className="btn btn-contact">Contact Us</button>
           <button className="btn btn-login">Login</button>
+          <button className="btn btn-club-login">Club Login</button>
         </div>
       </div>
     </nav>

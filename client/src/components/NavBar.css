@@ -67,11 +67,27 @@
   color: black;
 }
 
+.btn-contact:hover {
+  background-color: #e0e0e0;
+  color: black;
+}
+
 .btn-login {
   background-color: #00ffab;
   color: black;
 }
 
-.btn:hover {
-  transform: scale(1.05);
+.btn-login:hover {
+  background-color: #00cc87;
+  color: white;
+}
+
+.btn-club-login {
+  background-color: #7f00ff;
+  color: white;
+}
+
+.btn-club-login:hover {
+  background-color: #5a00b3;
+  color: white;
 }
