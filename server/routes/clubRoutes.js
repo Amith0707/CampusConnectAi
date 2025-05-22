@@ -1,26 +1,17 @@
 import express from 'express';
-import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
-import Club from '../models/Club.js';
+import { loginClubMember} from '../controllers/clubController.js';
+import authClubMiddleware from '../middleware/authClubMiddleware.js';
 
 const router = express.Router();
+//sedding the data (temporary for now)
+// router.post('/register', registerClubMember);
 
-// Club Login
-router.post('/login', async (req, res) => {
-  const { username, password } = req.body;
+// Club member login
+router.post('/login', loginClubMember);
 
-  try {
-    const club = await Club.findOne({ username });
-    if (!club) return res.status(400).json({ msg: 'Invalid credentials' });
-
-    const isMatch = await bcrypt.compare(password, club.password);
-    if (!isMatch) return res.status(400).json({ msg: 'Invalid credentials' });
-
-    const token = jwt.sign({ id: club._id }, process.env.JWT_SECRET);
-    res.json({ token, club: { id: club._id, name: club.name, username: club.username } });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
+// Protected test route
+router.get('/protected', authClubMiddleware, (req, res) => {
+  res.json({ message: `Welcome ${req.club.usn} to ${req.club.clubName} dashboard!` });
 });
 
 export default router;
