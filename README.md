@@ -95,5 +95,3 @@ Troubleshooting Tips
 Make sure Node.js is properly installed by running node -v and npm -v in your terminal
 
 If you face any issues, try deleting node_modules folder and running npm install again
-
-For any questions or help, reach out on our team chat!
