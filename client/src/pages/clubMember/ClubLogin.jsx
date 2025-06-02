@@ -25,7 +25,7 @@ const ClubLogin = () => {
       localStorage.setItem('clubToken', token);
       localStorage.setItem('clubName', clubName);
 
-      navigate(`/club-dashboard/${clubName}`);
+      navigate(`/club-dashboard/${clubName}`); // re directing to club dashboard
     } catch (err) {
       setError(err.response?.data?.message || 'Login failed. Please try again.');
     }
