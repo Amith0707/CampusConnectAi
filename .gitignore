@@ -9,7 +9,14 @@ __pycache__/
 # Ignore Node.js dependencies in server
 server/node_modules/
 
+# added python part what to ignore it
 node_modules/
+venv/
+__pycache__/
+*.pyc
+*.py[cod]
+feedback_files/
+
 
 # Ignore environment files
 .env
