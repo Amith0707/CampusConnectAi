@@ -5,7 +5,7 @@
 ###  Frontend
 - **React.js** – JavaScript library for building user interfaces
 - **React Router DOM** – Routing and navigation
-- **Tailwind CSS** – Utility-first CSS framework for styling
+- **CSS** –  CSS framework for styling
 - **Axios** – HTTP client for API requests
 - **Headless UI & HeroIcons** – For UI components and icons
 - **Socket.IO (if used)** – Real-time messaging (for Chatbot)
