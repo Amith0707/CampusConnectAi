@@ -1,0 +1,420 @@
+/* ParticipantDashboard.css */
+
+/* Overall background and container */
+.participant-dashboard {
+  background: #121212;
+  min-height: 100vh;
+  color: white;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  position: relative;
+  padding-top: 60px; /* for navbar height */
+  overflow-x: hidden;
+}
+
+/* Navbar */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: rgba(18, 18, 18, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2rem;
+  box-shadow: 0 0 15px #00ffabaa;
+  z-index: 1000;
+}
+
+.navbar .logo {
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: #00ffab;
+  letter-spacing: 1.2px;
+}
+
+.profile-btn {
+  background: #00ffab;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-weight: 700;
+  color: black;
+  cursor: pointer;
+  box-shadow: 0 0 10px #00ffab;
+  transition: transform 0.3s ease;
+}
+
+.profile-btn:hover {
+  transform: scale(1.1);
+}
+
+/* Profile Slide-out Panel */
+.profile-slideout {
+  position: fixed;
+  top: 0;
+  right: -320px; /* hidden by default */
+  width: 320px;
+  height: 100vh;
+  background: rgba(30, 30, 30, 0.95);
+  backdrop-filter: blur(12px);
+  box-shadow: -4px 0 15px #00ffabbb;
+  padding: 2rem;
+  color: white;
+  transition: right 0.35s ease;
+  z-index: 1050;
+  overflow-y: auto;
+}
+
+.profile-slideout.open {
+  right: 0;
+}
+
+.profile-slideout h2 {
+  margin-top: 0;
+  font-size: 1.8rem;
+  margin-bottom: 0.3rem;
+  color: #00ffab;
+}
+
+.profile-slideout p {
+  font-size: 1rem;
+  opacity: 0.7;
+  margin-bottom: 1.5rem;
+}
+
+/* Interests Section */
+.interests-section h3,
+.followed-clubs h3 {
+  margin-bottom: 0.75rem;
+  color: #00ffab;
+}
+
+.interests-section ul,
+.followed-clubs ul {
+  list-style: none;
+  padding-left: 0;
+  max-height: 120px;
+  overflow-y: auto;
+  margin-bottom: 1rem;
+}
+
+.interests-section li,
+.followed-clubs li {
+  display: flex;
+  justify-content: space-between;
+  background: #222;
+  margin-bottom: 0.5rem;
+  padding: 0.3rem 0.6rem;
+  border-radius: 12px;
+  align-items: center;
+}
+
+.interests-section button {
+  background: transparent;
+  border: none;
+  color: #ff4c4c;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 0 0.5rem;
+  transition: color 0.2s ease;
+}
+
+.interests-section button:hover {
+  color: #ff1a1a;
+}
+
+.logout-btn {
+  width: 100%;
+  background: #ff4c4c;
+  border: none;
+  padding: 0.75rem 0;
+  border-radius: 25px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 0 15px #ff4c4caa;
+  transition: background 0.3s ease;
+  color: white;
+}
+
+.logout-btn:hover {
+  background: #ff1a1a;
+}
+
+/* Glassmorphic Container for main content */
+.glass-container {
+  margin: 2rem auto;
+  max-width: 1200px;
+  background: rgba(30, 30, 30, 0.5);
+  backdrop-filter: blur(20px);
+  border-radius: 20px;
+  padding: 2rem 3rem;
+  box-shadow: 0 0 25px #00ffab55;
+  box-sizing: border-box;
+  min-height: calc(100vh - 100px);
+}
+
+/* Welcome Button */
+.welcome-btn {
+  background: #00ffab;
+  border: none;
+  border-radius: 30px;
+  color: black;
+  font-weight: 700;
+  font-size: 1.25rem;
+  padding: 1rem 2rem;
+  cursor: default;
+  margin-bottom: 2rem;
+  box-shadow: 0 0 20px #00ffabaa;
+}
+
+/* Events Sections */
+.events-section {
+  margin-bottom: 3rem;
+}
+
+.events-section h2 {
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: #00ffab;
+}
+
+/* Event Cards container */
+.events-section .cards-container {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  gap: 1.5rem;
+  padding-bottom: 10px;
+  scroll-snap-type: x mandatory;
+}
+
+.events-section .cards-container::-webkit-scrollbar {
+  height: 8px;
+}
+
+.events-section .cards-container::-webkit-scrollbar-thumb {
+  background: #00ffabaa;
+  border-radius: 10px;
+}
+
+.event-card {
+  min-width: 280px;
+  background: #222;
+  border-radius: 18px;
+  padding: 1.25rem 1.5rem;
+  box-shadow: 0 0 10px #00ffab88;
+  scroll-snap-align: start;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.event-card h3 {
+  margin: 0 0 0.6rem 0;
+  color: #00ffab;
+}
+
+.event-card p {
+  margin: 0 0 1rem 0;
+  opacity: 0.8;
+}
+
+.event-card .time-left {
+  font-weight: 600;
+  color: #90ee90;
+}
+
+.event-card button.register-btn {
+  margin-top: auto;
+  background: #00ffab;
+  border: none;
+  border-radius: 25px;
+  color: black;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  font-weight: 600;
+  transition: transform 0.3s ease;
+}
+
+.event-card button.register-btn:hover {
+  transform: scale(1.05);
+}
+
+/* Clubs Carousel */
+.clubs-carousel {
+  margin-bottom: 3rem;
+}
+
+.clubs-carousel h2 {
+  color: #00ffab;
+  margin-bottom: 1rem;
+}
+
+.clubs-carousel .carousel-container {
+  display: flex;
+  overflow-x: auto;
+  gap: 1rem;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 10px;
+}
+
+.clubs-carousel .carousel-container::-webkit-scrollbar {
+  height: 8px;
+}
+
+.clubs-carousel .carousel-container::-webkit-scrollbar-thumb {
+  background: #00ffabaa;
+  border-radius: 10px;
+}
+
+.club-card {
+  min-width: 120px;
+  height: 120px;
+  background: #222;
+  border-radius: 20px;
+  box-shadow: 0 0 15px #00ffab88;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  scroll-snap-align: start;
+  cursor: pointer;
+  user-select: none;
+  transition: transform 0.25s ease;
+}
+
+.club-card:hover {
+  transform: scale(1.05);
+}
+
+.club-logo {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: #00ffab;
+  margin-bottom: 0.5rem;
+}
+
+/* Announcements and Media */
+.announcements-media {
+  margin-bottom: 3rem;
+}
+
+.announcements-media h2 {
+  color: #00ffab;
+  margin-bottom: 1rem;
+}
+
+.announcement-card {
+  background: #222;
+  border-radius: 20px;
+  padding: 1rem 1.5rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 0 15px #00ffab66;
+  display: flex;
+  flex-direction: column;
+}
+
+.announcement-card img,
+.announcement-card video {
+  max-width: 100%;
+  border-radius: 15px;
+  margin-top: 0.8rem;
+  object-fit: cover;
+}
+
+/* Followed Clubs List */
+.followed-clubs-list {
+  margin-bottom: 3rem;
+}
+
+.followed-clubs-list h2 {
+  color: #00ffab;
+  margin-bottom: 1rem;
+}
+
+.followed-clubs-list ul {
+  list-style: none;
+  padding-left: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.followed-clubs-list li {
+  background: #222;
+  padding: 0.8rem 1rem;
+  border-radius: 20px;
+  box-shadow: 0 0 15px #00ffab66;
+  cursor: pointer;
+  user-select: none;
+  transition: transform 0.2s ease;
+}
+
+.followed-clubs-list li:hover {
+  transform: scale(1.05);
+}
+
+/* Chatbot mini window button */
+.chatbot-mini {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1100;
+}
+
+.chatbot-toggle {
+  background: #00ffab;
+  border: none;
+  border-radius: 50%;
+  width: 56px;
+  height: 56px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 0 20px #00ffabaa;
+  transition: transform 0.3s ease;
+}
+
+.chatbot-toggle:hover {
+  transform: scale(1.1);
+}
+
+/* Scrollbar styles for all horizontal scroll */
+::-webkit-scrollbar {
+  height: 8px;
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #00ffab88;
+  border-radius: 10px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .glass-container {
+    padding: 1rem 1.5rem;
+  }
+
+  .navbar {
+    padding: 0 1rem;
+  }
+
+  .events-section .cards-container,
+  .clubs-carousel .carousel-container {
+    gap: 1rem;
+  }
+
+  .event-card {
+    min-width: 220px;
+  }
+
+  .club-card {
+    min-width: 100px;
+    height: 100px;
+  }
+}
