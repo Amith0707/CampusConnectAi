@@ -52,6 +52,16 @@
       - Home.css
       - Home.jsx
       - participant
+        - Loading.jsx
+        - LoadingScreen.css
+        - LoadingScreen.jsx
+        - ParticipantAuth.css
+        - ParticipantDashboard.css
+        - participantDashboard.jsx
+        - ParticipantLogin.jsx
+        - ParticipantSignup.jsx
+        - SelectInterests.css
+        - SelectInterests.jsx
     - routes
     - styles
     - utils

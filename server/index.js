@@ -4,40 +4,45 @@ import dotenv from 'dotenv';
 import path from 'path';
 import connectDB from './server.js';
 
+// Routes
 import authRoutes from './routes/authRoutes.js';
 import clubRoutes from './routes/clubRoutes.js';
 import clubContentRoutes from './routes/clubContentRoutes.js';
 import sentimentRoutes from './routes/sentimentRoutes.js';
 
+// Load environment variables
 dotenv.config();
-connectDB();
 
+// Initialize Express app
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-//  Register middleware BEFORE routes
+// Connect to MongoDB
+connectDB();
+
+// MIDDLEWARE 
 app.use(cors());
-app.use(express.json()); // Important: this must come before routes
+app.use(express.json()); // Parse incoming JSON bodies
 
-//  Routes
-app.use('/api/sentiment', sentimentRoutes);
-app.use('/api/auth', authRoutes);
-app.use('/api/club', clubRoutes);
-app.use('/api/club-content', clubContentRoutes);
+//  ROUTES 
+app.use('/api/auth', authRoutes);               // Auth: signup/login/update
+app.use('/api/club', clubRoutes);               // Club details and management
+app.use('/api/club-content', clubContentRoutes); // Posters, reels, announcements
+app.use('/api/sentiment', sentimentRoutes);     // Feedback sentiment analysis
 
-// Static files
+// Serve uploaded static files
 app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
 
-//  Test routes
+// ===== TEST ROUTES =====
 app.get('/', (req, res) => {
-  res.send('CampusConnect AI Backend is running!');
+  res.send('📡 CampusConnect AI Backend is running!');
 });
 
 app.get('/test', (req, res) => {
-  res.send('API is working!');
+  res.send(' API is working!');
 });
 
-// ✅ Start server
+//  START SERVER 
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  console.log(` Server running at http://localhost:${PORT}`);
 });

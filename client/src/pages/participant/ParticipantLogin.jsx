@@ -22,7 +22,7 @@ const ParticipantLogin = () => {
         localStorage.setItem('name', res.data.name);
         localStorage.setItem('userId', res.data.userId);
 
-        navigate('/participant-dashboard');
+        navigate('/loading');  // <-- Navigate to loading page here
       }
     } catch (err) {
       alert(err.response?.data?.message || 'Login failed');
