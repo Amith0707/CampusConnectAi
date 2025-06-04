@@ -108,3 +108,29 @@ body {
   transform: translateY(-4px);
   box-shadow: 0 0 15px #00ffab88;
 }
+
+/*event button style*/
+.dashboard-header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.events-button {
+  padding: 10px 20px;
+  background: linear-gradient(to right, #8e2de2, #4a00e0);
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  box-shadow: 0 0 10px #8e2de2;
+  transition: all 0.2s ease;
+}
+
+.events-button:hover {
+  opacity: 0.9;
+  transform: scale(1.05);
+}
+

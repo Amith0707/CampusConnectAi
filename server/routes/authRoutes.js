@@ -11,7 +11,8 @@ router.post('/register', registerParticipant);
 router.post('/login', loginParticipant);
 
 router.get('/protected', authMiddleware, (req, res) => {
-  res.json({ message: `Hello ${req.user.email}, you are authorized!` });
+  console.log('Decoded JWT:', req.user);
+  res.json({ message: `Hello ${req.user.name}, you are authorized!` });
 });
 
 export default router;
