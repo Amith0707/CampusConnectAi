@@ -90,7 +90,15 @@ export default function ClubDashboard() {
             e.target.src = defaultLogo;
           }}
         />
-        <h1>Welcome to the {club.displayName} Dashboard</h1>
+        <div className="dashboard-header-content">
+          <h1>Welcome to the {club.displayName} Dashboard</h1>
+          <button
+            onClick={() => alert("📅 Events feature coming soon!")}
+            className="events-button"
+          >
+            📅 Events
+          </button>
+        </div>
       </header>
 
       <section className="dashboard-section">

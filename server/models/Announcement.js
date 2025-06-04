@@ -1,6 +1,10 @@
 import mongoose from 'mongoose';
 
 const announcementSchema = new mongoose.Schema({
+  title: {
+    type: String,
+    required: true,
+  },
   clubName: {
     type: String,
     required: true,
@@ -17,6 +21,7 @@ const announcementSchema = new mongoose.Schema({
 
 const Announcement = mongoose.model('Announcement', announcementSchema);
 export default Announcement;
+
 
 
 /*defines the schema for storing announcements made by club members 
