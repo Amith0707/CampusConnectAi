@@ -1,0 +1,111 @@
+- .gitattributes
+- .gitignore
+- .nvmrc
+- client
+  - .gitignore
+  - eslint.config.js
+  - index.html
+  - package-lock.json
+  - package.json
+  - Public
+    - vite.svg
+  - README.md
+  - src
+    - api
+    - App.css
+    - App.jsx
+    - assets
+      - default-logo.jpg
+      - Lit Club.jpg
+      - Media Club.jpg
+      - react.svg
+      - ted x black.png
+      - ted x white.png
+    - components
+      - FeatureCard.css
+      - FeatureCard.jsx
+      - NavBar.css
+      - NavBar.jsx
+    - constants
+    - context
+    - features
+      - admin
+      - chatbot
+      - clubMember
+      - ocr
+      - participant
+      - participation_prediction
+      - recommendation_systems
+      - sentiment_analysis
+    - index.css
+    - main.jsx
+    - pages
+      - admin
+      - clubMember
+        - ClubDashboard.css
+        - ClubDashboard.jsx
+        - ClubLogin.css
+        - ClubLogin.jsx
+        - PostAnnouncement.jsx
+        - PostForm.css
+        - PostMedia.jsx
+      - Home.css
+      - Home.jsx
+      - participant
+        - Loading.jsx
+        - LoadingScreen.css
+        - LoadingScreen.jsx
+        - ParticipantAuth.css
+        - ParticipantDashboard.css
+        - participantDashboard.jsx
+        - ParticipantLogin.jsx
+        - ParticipantSignup.jsx
+        - SelectInterests.css
+        - SelectInterests.jsx
+    - routes
+    - styles
+    - utils
+  - vite.config.js
+- LICENSE
+- package-lock.json
+- package.json
+- README.md
+- server
+  - .env
+  - config
+    - db.js
+  - controllers
+    - authController.js
+    - clubController.js
+    - sentimentController.js
+  - feedback_files
+    - feedback_Test_Event_1.xlsx
+  - index.js
+  - middleware
+    - authClubMiddleware.js
+    - authMiddleware.js
+  - models
+    - Announcement.js
+    - clubMember.js
+    - Media.js
+    - participant.js
+    - User.js
+  - package-lock.json
+  - package.json
+  - requirements.txt
+  - routes
+    - authRoutes.js
+    - clubContentRoutes.js
+    - clubRoutes.js
+    - sentimentRoutes.js
+  - seed.js
+  - server.js
+  - uploads
+    - 1749004022057-319416710-cat.jpg
+    - Side Quests_post.jpg
+    - tedx_reel1.mp4
+  - utils
+    - generateToken.js
+    - sentiment.py
+- Summary.md
+- uploads

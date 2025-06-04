@@ -17,8 +17,15 @@ const Navbar = () => {
         </div>
 
         <div className="navbar-buttons">
-          <button className="btn btn-contact">Contact Us</button>
-          <button className="btn btn-login">Login</button>
+          {/* <button className="btn btn-contact">Contact Us</button> */}
+          {/* Club Login as Link */}
+          <Link to="/participant-signup" className="btn btn-signup">
+            Signup
+          </Link>
+          {/* <button className="btn btn-login">Login</button> */}
+          <Link to="/participant-login" className='btn btn-login'>
+          Login
+          </Link>
 
           {/* Club Login as Link */}
           <Link to="/club-login" className="btn btn-club-login">
