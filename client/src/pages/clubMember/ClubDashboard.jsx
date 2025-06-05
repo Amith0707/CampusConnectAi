@@ -24,6 +24,22 @@ const clubData = {
   },
 };
 
+const interestOptions = [
+  "Tech",
+  "Sports",
+  "Music",
+  "Art",
+  "Coding",
+  "Gaming",
+  "Literature",
+  "Photography",
+  "Travel",
+  "Science",
+  "Cultural",
+  "Fun",
+  "Talks",
+];
+
 export default function ClubDashboard() {
   const { clubName } = useParams();
   const navigate = useNavigate();
@@ -36,6 +52,14 @@ export default function ClubDashboard() {
   const [announcement, setAnnouncement] = useState("");
   const [title, setTitle] = useState("");
   const token = localStorage.getItem("clubToken");
+
+  // Event Modal states
+  const [showEventModal, setShowEventModal] = useState(false);
+  const [eventTitle, setEventTitle] = useState("");
+  const [eventDesc, setEventDesc] = useState("");
+  const [eventInterests, setEventInterests] = useState([]); // changed to array
+  const [eventType, setEventType] = useState("free");
+  const [eventPosting, setEventPosting] = useState(false);
 
   useEffect(() => {
     if (!token) {
@@ -52,18 +76,21 @@ export default function ClubDashboard() {
     }
 
     try {
-      const response = await fetch("http://localhost:5000/api/club-content/announcement", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          title,
-          content: announcement,
-          clubName: normalizedClubName,
-        }),
-      });
+      const response = await fetch(
+        "http://localhost:5000/api/club-content/announcement",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            title,
+            content: announcement,
+            clubName: normalizedClubName,
+          }),
+        }
+      );
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -75,6 +102,61 @@ export default function ClubDashboard() {
       setTitle("");
     } catch (error) {
       alert(`Error: ${error.message}`);
+    }
+  };
+
+  const openEventModal = () => {
+    setShowEventModal(true);
+  };
+
+  const closeEventModal = () => {
+    if (!eventPosting) {
+      setShowEventModal(false);
+      setEventTitle("");
+      setEventDesc("");
+      setEventInterests([]);
+      setEventType("free");
+    }
+  };
+
+  const handleEventSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!eventTitle.trim() || !eventDesc.trim() || eventInterests.length === 0) {
+      alert("Please fill in all event fields and select at least one interest.");
+      return;
+    }
+
+    setEventPosting(true);
+
+    try {
+      const response = await fetch("http://localhost:5000/api/events", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          clubName: normalizedClubName,
+          title: eventTitle,
+          description: eventDesc,
+          interests: eventInterests,
+          freeOrPaid: eventType,
+          postedAt: new Date().toISOString(),
+        }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Failed to create event");
+      }
+
+      alert("Event created successfully!");
+      closeEventModal();
+    } catch (error) {
+      alert(`Error: ${error.message}`);
+    } finally {
+      setEventPosting(false);
     }
   };
 
@@ -92,15 +174,21 @@ export default function ClubDashboard() {
         />
         <div className="dashboard-header-content">
           <h1>Welcome to the {club.displayName} Dashboard</h1>
-          <button
-            onClick={() => alert("📅 Events feature coming soon!")}
-            className="events-button"
-          >
-            📅 Events
-          </button>
+          <div className="header-buttons">
+            <button
+              onClick={() => alert("📅 Events feature coming soon!")}
+              className="events-button"
+            >
+              📅 Events
+            </button>
+            <button onClick={openEventModal} className="create-event-button">
+              + Create Event
+            </button>
+          </div>
         </div>
       </header>
 
+      {/* Announcement Section */}
       <section className="dashboard-section">
         <h2>📢 Post an Announcement</h2>
         <form onSubmit={handleAnnouncementSubmit} className="form-container">
@@ -124,11 +212,13 @@ export default function ClubDashboard() {
         </form>
       </section>
 
+      {/* Media Section */}
       <section className="dashboard-section">
         <h2>🎥 Post Media to Feed</h2>
         <PostMedia token={token} clubName={normalizedClubName} />
       </section>
 
+      {/* ML Features Section */}
       <section className="dashboard-section">
         <h2>🤖 ML Features (Coming Soon)</h2>
         <div className="ml-feature-grid">
@@ -146,6 +236,79 @@ export default function ClubDashboard() {
           </div>
         </div>
       </section>
+
+      {/* Event Modal */}
+      {showEventModal && (
+        <div className="modal-overlay" onClick={closeEventModal}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <h2>Create New Event</h2>
+            <form onSubmit={handleEventSubmit} className="form-container">
+              <input
+                type="text"
+                placeholder="Event Title"
+                value={eventTitle}
+                onChange={(e) => setEventTitle(e.target.value)}
+                className="input-area"
+              />
+              <textarea
+                placeholder="Description"
+                value={eventDesc}
+                onChange={(e) => setEventDesc(e.target.value)}
+                rows={4}
+                className="input-area"
+              />
+
+              {/* Multi-select dropdown for interests */}
+              <label htmlFor="event-interests" className="select-label">
+                Select Interests (hold Ctrl or Cmd to select multiple)
+              </label>
+              <select
+                id="event-interests"
+                multiple
+                value={eventInterests}
+                onChange={(e) => {
+                  const options = Array.from(e.target.selectedOptions);
+                  const values = options.map((opt) => opt.value);
+                  setEventInterests(values);
+                }}
+                className="input-area"
+              >
+                {interestOptions.map((interest) => (
+                  <option key={interest} value={interest}>
+                    {interest}
+                  </option>
+                ))}
+              </select>
+
+              <select
+                value={eventType}
+                onChange={(e) => setEventType(e.target.value)}
+                className="input-area"
+              >
+                <option value="free">Free</option>
+                <option value="paid">Paid</option>
+              </select>
+              <div className="modal-buttons">
+                <button
+                  type="submit"
+                  className="neon-button"
+                  disabled={eventPosting}
+                >
+                  {eventPosting ? "Submitting..." : "Submit"}
+                </button>
+                <button
+                  type="button"
+                  onClick={closeEventModal}
+                  className="modal-close-button"
+                  disabled={eventPosting}
+                >
+                  Cancel
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
