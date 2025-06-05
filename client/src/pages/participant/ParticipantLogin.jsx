@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import './ParticipantAuth.css';
 
 const ParticipantLogin = () => {
@@ -8,25 +7,23 @@ const ParticipantLogin = () => {
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
-  const handleLogin = async (e) => {
+  const handleLogin = (e) => {
     e.preventDefault();
 
-    try {
-      const res = await axios.post('http://localhost:5000/api/auth/login', {
-        email,
-        password,
-      });
+    console.log('[Login] Form submit triggered');
+    console.log('[Login] Current email:', email);
+    console.log('[Login] Current password:', password ? '******' : '(empty)');
 
-      if (res.status === 200) {
-        localStorage.setItem('token', res.data.token);
-        localStorage.setItem('name', res.data.name);
-        localStorage.setItem('userId', res.data.userId);
-
-        navigate('/loading');  // <-- Navigate to loading page here
-      }
-    } catch (err) {
-      alert(err.response?.data?.message || 'Login failed');
+    if (!email || !password) {
+      console.warn('[Login] Missing email or password');
+      alert('Please enter both email and password');
+      return;
     }
+
+    console.log('[Login] Navigating to /loading with loginData state...');
+    navigate('/loading', {
+      state: { loginData: { email, password } },
+    });
   };
 
   return (
@@ -41,7 +38,10 @@ const ParticipantLogin = () => {
               className="auth-input"
               placeholder="Enter email"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => {
+                setEmail(e.target.value);
+                console.log('[Login] Email input changed:', e.target.value);
+              }}
               required
             />
           </div>
@@ -52,7 +52,10 @@ const ParticipantLogin = () => {
               className="auth-input"
               placeholder="Enter password"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) => {
+                setPassword(e.target.value);
+                console.log('[Login] Password input changed: ******');
+              }}
               required
             />
           </div>
@@ -62,7 +65,15 @@ const ParticipantLogin = () => {
           </button>
           <p className="auth-link">
             Don’t have an account?{' '}
-            <span onClick={() => navigate('/participant-signup')}>Sign up here</span>
+            <span
+              onClick={() => {
+                console.log('[Login] Navigating to signup page');
+                navigate('/participant-signup');
+              }}
+              style={{ cursor: 'pointer', color: '#00ffab', textDecoration: 'underline' }}
+            >
+              Sign up here
+            </span>
           </p>
         </form>
       </div>
@@ -71,3 +82,4 @@ const ParticipantLogin = () => {
 };
 
 export default ParticipantLogin;
+

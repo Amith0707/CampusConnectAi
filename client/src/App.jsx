@@ -8,7 +8,7 @@ import ParticipantLogin from './pages/participant/ParticipantLogin';
 import ParticipantDashboard from './pages/participant/participantDashboard';
 import SelectInterests from './pages/participant/SelectInterests';
 import LoadingScreen from './pages/participant/LoadingScreen'; // <- Import the loading screen
-
+import Loading from './pages/participant/Loading';
 function App() {
   return (
     <Router>
@@ -20,7 +20,7 @@ function App() {
         <Route path="/participant-login" element={<ParticipantLogin />} />
         <Route path="/select-interests" element={<SelectInterests />} />
         <Route path="/participant-dashboard" element={<ParticipantDashboard />} />
-        <Route path="/loading" element={<LoadingScreen />} /> {/* <- Loading route added */}
+        <Route path="/loading" element={<Loading />} />
       </Routes>
     </Router>
   );
