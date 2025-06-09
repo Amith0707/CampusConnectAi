@@ -26,6 +26,8 @@
       - FeatureCard.jsx
       - NavBar.css
       - NavBar.jsx
+      - SentimentPopup.css
+      - SentimentPopup.jsx
     - constants
     - context
     - features
@@ -46,6 +48,8 @@
         - ClubDashboard.jsx
         - ClubLogin.css
         - ClubLogin.jsx
+        - FeaturesPanel.css
+        - FeaturesPanel.jsx
         - PostAnnouncement.jsx
         - PostForm.css
         - PostMedia.jsx
@@ -66,10 +70,18 @@
     - styles
     - utils
   - vite.config.js
+- feedback results
+- feedback_files
+  - feedback_AI_in_2025.xlsx
+  - feedback_Future_Forward.xlsx
+  - feedback_Unfiltered_Voices.xlsx
+  - feedback_Voices_Unheard.xlsx
 - LICENSE
 - package-lock.json
 - package.json
+- project_structure.text
 - README.md
+- seed.ipynb
 - server
   - .env
   - config
@@ -87,6 +99,7 @@
   - models
     - Announcement.js
     - clubMember.js
+    - Events.js
     - Media.js
     - participant.js
     - User.js
@@ -97,11 +110,15 @@
     - authRoutes.js
     - clubContentRoutes.js
     - clubRoutes.js
+    - events.js
     - sentimentRoutes.js
+  - seed
+    - seedTedxEvents.js
   - seed.js
   - server.js
   - uploads
     - 1749004022057-319416710-cat.jpg
+    - 1749105374037-336963848-heatmap.png
     - Side Quests_post.jpg
     - tedx_reel1.mp4
   - utils

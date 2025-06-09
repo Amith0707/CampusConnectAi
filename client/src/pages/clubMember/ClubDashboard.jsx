@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "./ClubDashboard.css";
+import "./FeaturesPanel.css";
 
 import tedxLogo from "../../assets/ted x white.png";
 import litClubLogo from "../../assets/Lit Club.jpg";
@@ -8,6 +9,7 @@ import mediaClubLogo from "../../assets/Media Club.jpg";
 import defaultLogo from "../../assets/default-logo.jpg";
 
 import PostMedia from "./PostMedia";
+import FeaturesPanel from "./FeaturesPanel"; // import FeaturesPanel
 
 const clubData = {
   tedx: {
@@ -60,6 +62,9 @@ export default function ClubDashboard() {
   const [eventInterests, setEventInterests] = useState([]); // changed to array
   const [eventType, setEventType] = useState("free");
   const [eventPosting, setEventPosting] = useState(false);
+
+  // New state to control FeaturesPanel visibility
+  const [showFeaturesPanel, setShowFeaturesPanel] = useState(false);
 
   useEffect(() => {
     if (!token) {
@@ -175,11 +180,12 @@ export default function ClubDashboard() {
         <div className="dashboard-header-content">
           <h1>Welcome to the {club.displayName} Dashboard</h1>
           <div className="header-buttons">
+            {/* Changed Events button to Features button */}
             <button
-              onClick={() => alert("📅 Events feature coming soon!")}
-              className="events-button"
+              onClick={() => setShowFeaturesPanel(true)}
+              className="features-button"
             >
-              📅 Events
+              ⚙️ Features
             </button>
             <button onClick={openEventModal} className="create-event-button">
               + Create Event
@@ -308,6 +314,14 @@ export default function ClubDashboard() {
             </form>
           </div>
         </div>
+      )}
+
+      {/* Features Panel Slide-in */}
+      {showFeaturesPanel && (
+        <FeaturesPanel
+          clubName={normalizedClubName}
+          onClose={() => setShowFeaturesPanel(false)}
+        />
       )}
     </div>
   );
