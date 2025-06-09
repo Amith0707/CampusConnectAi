@@ -1,0 +1,75 @@
+.features-panel {
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 400px;
+  max-width: 90vw;
+  height: 100vh;
+  background-color: #121212;
+  color: white;
+  z-index: 9999;
+  padding: 25px 30px;
+  box-shadow: -2px 0 20px #00ffab55;
+  transform: translateX(0%);
+  transition: transform 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.features-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.features-header h2 {
+  margin: 0;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: white;
+  cursor: pointer;
+}
+
+.feature-section {
+  margin-bottom: 30px;
+}
+
+.feature-section h3 {
+  margin-bottom: 10px;
+}
+
+.feature-section select,
+.feature-section input,
+.feature-section textarea {
+  width: 100%;
+  padding: 10px;
+  background-color: #1e1e1e;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
+
+.checkbox-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.checkbox-group label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background-color: #1e1e1e;
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
