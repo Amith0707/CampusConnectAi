@@ -1,3 +1,4 @@
+// models/Events.js
 import mongoose from 'mongoose';
 
 const eventSchema = new mongoose.Schema({
@@ -31,12 +32,19 @@ const eventSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-  isRegistrationOpen: { //added now need to change ui
+  isRegistrationOpen: {
     type: Boolean,
     default: false,
+  },
+  entryFee: {
+    type: Number,
+    default: 0,
+  },
+  googleFormLink: {
+    type: String,
+    required: true,
   },
 });
 
 const Event = mongoose.model('Event', eventSchema);
-
 export default Event;

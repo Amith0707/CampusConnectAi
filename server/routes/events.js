@@ -8,14 +8,26 @@ router.post('/', async (req, res) => {
   console.log("Incoming event creation request...");
 
   try {
-    const { clubName, title, description, interests, freeOrPaid, postedAt } = req.body;
+    const { clubName, title, description, interests, freeOrPaid, postedAt,entryFee,googleFormLink } = req.body;
     console.log("Request body:", req.body);
 
-    if (!clubName || !title || !description || !interests || !freeOrPaid) {
+    if (!clubName || !title || !description || !interests || !freeOrPaid || !googleFormLink) {
       console.log("Missing fields in request");
       return res.status(400).json({ message: "Missing required fields." });
     }
+    // adding validation that for paid entries entry Fee needed
+    if (
+      freeOrPaid === "paid" &&
+      (!entryFee || isNaN(entryFee) || Number(entryFee) <= 0)
+    ) {
+      return res.status(400).json({ message: "Valid entry fee is required for paid events" });
+    }
 
+    // Validate that the googleFormLink is a valid Google Form URL
+    const googleFormPattern = /^https:\/\/docs\.google\.com\/forms\/.+$/;
+    if (!googleFormPattern.test(googleFormLink)) {
+      return res.status(400).json({ message: "Invalid Google Form link provided." });
+    }
     const newEvent = new Event({
       clubName,
       title,
@@ -23,6 +35,9 @@ router.post('/', async (req, res) => {
       interests,
       freeOrPaid,
       postedAt: postedAt || new Date(),
+      //skipped doing isRegistrationOpen:true coz will be done by user
+      entryFee:freeOrPaid ==="paid" ?entryFee:0,
+      googleFormLink
     });
 
     console.log("Saving event to DB...");

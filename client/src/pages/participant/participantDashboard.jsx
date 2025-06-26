@@ -93,8 +93,21 @@ const ParticipantDashboard = () => {
                       {event.freeOrPaid?.toUpperCase() || 'UNKNOWN'}
                     </span>
                     <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-                      <button className="register-btn">Register</button>
-
+                      {/* <button className="register-btn">Register</button> */}
+                      {event.googleFormLink ? (
+                        <a
+                          href={event.googleFormLink}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="register-btn"
+                          style={{ textDecoration: "none" }}
+                        >
+                          Register
+                        </a>
+                        //got an edge case error where no google form was there
+                      ) : (
+                        <button className="register-btn" disabled>No Form</button>
+                      )}
                       {event.freeOrPaid === 'paid' && (
                         <>
                           <input

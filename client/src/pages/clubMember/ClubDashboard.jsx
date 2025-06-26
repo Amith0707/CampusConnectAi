@@ -62,6 +62,8 @@ export default function ClubDashboard() {
   const [eventInterests, setEventInterests] = useState([]); // changed to array
   const [eventType, setEventType] = useState("free");
   const [eventPosting, setEventPosting] = useState(false);
+  const [googleFormLink, setGoogleFormLink] = useState("");//added 
+  const [entryFee, setEntryFee] = useState("");//added this entry fee 
 
   // New state to control FeaturesPanel visibility
   const [showFeaturesPanel, setShowFeaturesPanel] = useState(false);
@@ -121,6 +123,8 @@ export default function ClubDashboard() {
       setEventDesc("");
       setEventInterests([]);
       setEventType("free");
+      setEntryFee("");//added
+      setGoogleFormLink("");//added google form link
     }
   };
 
@@ -148,6 +152,8 @@ export default function ClubDashboard() {
           interests: eventInterests,
           freeOrPaid: eventType,
           postedAt: new Date().toISOString(),
+          entryFee:eventType==="paid"? entryFee:0,
+          googleFormLink
         }),
       });
 
@@ -294,6 +300,22 @@ export default function ClubDashboard() {
                 <option value="free">Free</option>
                 <option value="paid">Paid</option>
               </select>
+              {eventType === "paid" && (
+                  <input
+                    type="number"
+                    placeholder="Entry Fee"
+                    value={entryFee}
+                    onChange={(e)=> setEntryFee(e.target.value)}
+                    className="input-area"
+                  />
+              )}
+              <input 
+                type="url"
+                placeholder="Google Form Link"
+                value={googleFormLink}
+                onChange={(e) => setGoogleFormLink(e.target.value)}
+                className="input-area"
+              />
               <div className="modal-buttons">
                 <button
                   type="submit"
