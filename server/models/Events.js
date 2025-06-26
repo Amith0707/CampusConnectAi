@@ -17,7 +17,10 @@ const eventSchema = new mongoose.Schema({
   interests: {
     type: [String],
     required: true,
-    validate: [arr => arr.length > 0, 'At least one interest is required'],
+    validate: {
+      validator: arr => arr.length > 0,
+      message: 'At least one interest is required',
+    },
   },
   freeOrPaid: {
     type: String,
@@ -27,6 +30,10 @@ const eventSchema = new mongoose.Schema({
   postedAt: {
     type: Date,
     default: Date.now,
+  },
+  isRegistrationOpen: { //added now need to change ui
+    type: Boolean,
+    default: false,
   },
 });
 
