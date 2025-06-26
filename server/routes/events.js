@@ -48,4 +48,31 @@ router.get('/latest', async (req, res) => {
   }
 });
 
+// PATCH /api/events/:id/registration - Toggle isRegistrationOpen
+router.patch('/:id/registration', async (req, res) => {
+  try {
+    const { isRegistrationOpen } = req.body;
+
+    if (typeof isRegistrationOpen !== 'boolean') {
+      return res.status(400).json({ message: "isRegistrationOpen must be boolean." });
+    }
+
+    const updated = await Event.findByIdAndUpdate(
+      req.params.id,
+      { isRegistrationOpen },
+      { new: true }
+    );
+
+    if (!updated) {
+      return res.status(404).json({ message: "Event not found" });
+    }
+
+    res.status(200).json({ message: "Registration status updated", event: updated });
+  } catch (err) {
+    console.error("Error updating registration status:", err.message);
+    res.status(500).json({ message: "Server error", error: err.message });
+  }
+});
+
+
 export default router;

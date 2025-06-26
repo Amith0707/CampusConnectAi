@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import "./FeaturesPanel.css";
 import SentimentPopup from "../../components/SentimentPopup";
 
-
 const branches = ["CSE", "AIML", "ECE", "EE", "ISE", "ME", "BCA", "MBA"];
 const interests = [
   "Tech", "Sports", "Music", "Art", "Coding", "Gaming",
@@ -13,11 +12,9 @@ const FeaturesPanel = ({ onClose, clubName }) => {
   const [events, setEvents] = useState([]);
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [showParticipation, setShowParticipation] = useState(false);
-
-  // State to manage sentiment popup visibility and data
-  const [showPopup, setShowPopup] = useState(false); // Added: manage visibility of popup
-  const [popupData, setPopupData] = useState(null); // Added: data to be passed to SentimentPopup
-  const [loading, setLoading] = useState(false); // Added: button loading state
+  const [showPopup, setShowPopup] = useState(false);
+  const [popupData, setPopupData] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const [predictionForm, setPredictionForm] = useState({
     title: "",
@@ -27,31 +24,28 @@ const FeaturesPanel = ({ onClose, clubName }) => {
   });
 
   useEffect(() => {
-    const fetchLatestEvents = async () => {
-      try {
-        const res = await fetch("http://localhost:5000/api/events/latest");
-        const data = await res.json();
-        setEvents(data);
-      } catch (err) {
-        console.error("Failed to fetch events:", err);
-      }
-    };
-
     fetchLatestEvents();
   }, []);
 
-  // Function to trigger backend sentiment analysis and show popup
+  const fetchLatestEvents = async () => {
+    try {
+      const res = await fetch("http://localhost:5000/api/events/latest");
+      const data = await res.json();
+      setEvents(data);
+    } catch (err) {
+      console.error("Failed to fetch events:", err);
+    }
+  };
+
   const handleGenerate = async () => {
     if (!selectedEvent) return;
 
-    setLoading(true); // Start loading
+    setLoading(true);
     try {
-      const res = await fetch(`http://localhost:5000/api/sentiment/analyze`, {
+      const res = await fetch("http://localhost:5000/api/sentiment/analyze", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ event_name: selectedEvent.title }) // Backend uses Excel file
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ event_name: selectedEvent.title })
       });
 
       const result = await res.json();
@@ -60,12 +54,12 @@ const FeaturesPanel = ({ onClose, clubName }) => {
         stats: result.stats,
         filePath: result.filePath
       });
-      setShowPopup(true); // Show popup on success
+      setShowPopup(true);
     } catch (err) {
-      console.error("Failed to analyze sentiment:", err);
+      console.error("Sentiment analysis failed:", err);
       alert("Sentiment analysis failed.");
     } finally {
-      setLoading(false); // End loading
+      setLoading(false);
     }
   };
 
@@ -87,6 +81,24 @@ const FeaturesPanel = ({ onClose, clubName }) => {
     }));
   };
 
+  const toggleRegistration = async (eventId, currentStatus) => {
+    try {
+      const res = await fetch(`http://localhost:5000/api/events/${eventId}/registration`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ isRegistrationOpen: !currentStatus })
+      });
+
+      if (!res.ok) throw new Error("Failed to update registration");
+
+      // Refresh event list after toggle
+      fetchLatestEvents();
+    } catch (err) {
+      console.error("Toggle registration failed:", err);
+      alert("Could not update registration status.");
+    }
+  };
+
   return (
     <div className="features-panel">
       <div className="features-header">
@@ -94,7 +106,7 @@ const FeaturesPanel = ({ onClose, clubName }) => {
         <button className="close-btn" onClick={onClose}>✖</button>
       </div>
 
-      {/* Feedback Analysis Section */}
+      {/* Feedback Analysis */}
       <div className="feature-section">
         <h3>📊 Feedback Analysis</h3>
         {events.map((event) => (
@@ -116,7 +128,7 @@ const FeaturesPanel = ({ onClose, clubName }) => {
         )}
       </div>
 
-      {/* Participation Prediction Section */}
+      {/* Participation Prediction */}
       <div className="feature-section">
         <h3
           className="dropdown-header"
@@ -141,7 +153,6 @@ const FeaturesPanel = ({ onClose, clubName }) => {
                 setPredictionForm({ ...predictionForm, description: e.target.value })
               }
             />
-
             <div className="checkbox-group">
               <strong>Targeted Branches:</strong>
               {branches.map((branch) => (
@@ -156,7 +167,6 @@ const FeaturesPanel = ({ onClose, clubName }) => {
                 </label>
               ))}
             </div>
-
             <div className="checkbox-group">
               <strong>Interests:</strong>
               {interests.map((interest) => (
@@ -171,7 +181,6 @@ const FeaturesPanel = ({ onClose, clubName }) => {
                 </label>
               ))}
             </div>
-
             <button
               className="neon-button"
               onClick={() => alert("Prediction feature coming soon!")}
@@ -182,10 +191,26 @@ const FeaturesPanel = ({ onClose, clubName }) => {
         )}
       </div>
 
-      {/* Conditionally render SentimentPopup */}
+      {/* Manage Registrations */}
+      <div className="feature-section">
+        <h3>📥 Manage Registrations</h3>
+        <p>Select to toggle registration availability:</p>
+        {events.map((event) => (
+          <label key={event._id} className="checkbox-option">
+            <input
+              type="checkbox"
+              checked={event.isRegistrationOpen || false}
+              onChange={() => toggleRegistration(event._id, event.isRegistrationOpen)}
+            />
+            {event.title} – {event.isRegistrationOpen ? "🟢 Open" : "🔴 Closed"}
+          </label>
+        ))}
+      </div>
+
+      {/* Popup */}
       {showPopup && popupData && (
         <SentimentPopup
-          popupData={popupData}   //this was causing render loading issue this small thing :
+          popupData={popupData}
           onClose={() => {
             setShowPopup(false);
             setPopupData(null);
