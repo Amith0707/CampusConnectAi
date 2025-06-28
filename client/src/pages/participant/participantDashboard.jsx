@@ -10,6 +10,7 @@ const ParticipantDashboard = () => {
   const [showProfile, setShowProfile] = useState(false);
   const [interests, setInterests] = useState([]);
   const navigate = useNavigate();
+  const [receiptStatus, setReceiptStatus] = useState({});
 
   useEffect(() => {
     const fetchData = async () => {
@@ -93,8 +94,21 @@ const ParticipantDashboard = () => {
                       {event.freeOrPaid?.toUpperCase() || 'UNKNOWN'}
                     </span>
                     <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-                      <button className="register-btn">Register</button>
-
+                      {/* <button className="register-btn">Register</button> */}
+                      {event.googleFormLink ? (
+                        <a
+                          href={event.googleFormLink}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="register-btn"
+                          style={{ textDecoration: "none" }}
+                        >
+                          Register
+                        </a>
+                        //got an edge case error where no google form was there
+                      ) : (
+                        <button className="register-btn" disabled>No Form</button>
+                      )}
                       {event.freeOrPaid === 'paid' && (
                         <>
                           <input
@@ -102,9 +116,33 @@ const ParticipantDashboard = () => {
                             accept="application/pdf"
                             id={`receipt-${event._id}`}
                             style={{ display: 'none' }}
-                            onChange={(e) => {
+                            onChange={async(e) => {
                               const file = e.target.files[0];
-                              if (file) alert(`Selected receipt: ${file.name}`);
+                              // if (file) alert(`Selected receipt: ${file.name}`);
+                              if (file) {
+                                const formData = new FormData();
+                                formData.append("eventId", event._id);
+                                formData.append("receipt", file);
+
+                                try {
+                                  const res = await fetch("http://localhost:5000/api/verify-receipt", {
+                                    method: "POST",
+                                    body: formData,
+                                  });
+
+                                  const data = await res.json();
+
+                                  setReceiptStatus((prev) => ({
+                                    ...prev,
+                                    [event._id]: data.status === "Verified" ? " Receipt Verified" : " Invalid Receipt",
+                                  }));
+                                } catch (err) {
+                                  setReceiptStatus((prev) => ({
+                                    ...prev,
+                                    [event._id]: " Upload Failed",
+                                  }));
+                                }
+                              }
                             }}
                           />
                           <button
@@ -114,17 +152,15 @@ const ParticipantDashboard = () => {
                           >
                             Upload Receipt
                           </button>
+                          {receiptStatus[event._id] && (
+                            <span style={{ color: event.freeOrPaid === 'paid' ? '#00ffab' : '#ff4d4d', fontWeight: 600 }}>
+                              {receiptStatus[event._id]}
+                            </span>
+                          )}
                         </>
                       )}
                     </div>
                   </div>
-
-                  {/* <div className="event-bottom">
-                    <span className={`event-badge ${event.freeOrPaid === 'free' ? 'free' : 'paid'}`}>
-                      {event.freeOrPaid?.toUpperCase() || 'UNKNOWN'}
-                    </span>
-                    <button className="register-btn">Register</button>
-                  </div> */}
                 </div>
               ))}
             </div>

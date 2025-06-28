@@ -62,6 +62,10 @@ export default function ClubDashboard() {
   const [eventInterests, setEventInterests] = useState([]); // changed to array
   const [eventType, setEventType] = useState("free");
   const [eventPosting, setEventPosting] = useState(false);
+  const [googleFormLink, setGoogleFormLink] = useState("");//added 
+  const [googleSheetLink, setGoogleSheetLink] = useState("");//added new
+
+  const [entryFee, setEntryFee] = useState("");//added this entry fee 
 
   // New state to control FeaturesPanel visibility
   const [showFeaturesPanel, setShowFeaturesPanel] = useState(false);
@@ -121,6 +125,8 @@ export default function ClubDashboard() {
       setEventDesc("");
       setEventInterests([]);
       setEventType("free");
+      setEntryFee("");//added
+      setGoogleFormLink("");//added google form link
     }
   };
 
@@ -148,6 +154,9 @@ export default function ClubDashboard() {
           interests: eventInterests,
           freeOrPaid: eventType,
           postedAt: new Date().toISOString(),
+          entryFee:eventType==="paid"? entryFee:0,
+          googleFormLink,
+          googleSheetLink,
         }),
       });
 
@@ -294,6 +303,57 @@ export default function ClubDashboard() {
                 <option value="free">Free</option>
                 <option value="paid">Paid</option>
               </select>
+
+              {eventType === "paid" && (
+                <input
+                  type="number"
+                  placeholder="Entry Fee"
+                  value={entryFee}
+                  onChange={(e) => setEntryFee(e.target.value)}
+                  className="input-area"
+                />
+              )}
+
+              <input
+                type="url"
+                placeholder="Google Form Link"
+                value={googleFormLink}
+                onChange={(e) => setGoogleFormLink(e.target.value)}
+                className="input-area"
+              />
+
+              {/* Reminder and Copy Button */}
+              <p style={{ fontSize: "12px", marginTop: "4px", color: "#ccc" }}>
+                After creating the form, open the linked Google Sheet and share it with:
+              </p>
+              <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "8px" }}>
+                <code style={{ fontSize: "13px" }}>
+                  campus-connect-sheet-bot@campusconnect-sheets.iam.gserviceaccount.com
+                </code>
+                <button
+                  type="button"
+                  onClick={() =>
+                    navigator.clipboard.writeText("campus-connect-sheet-bot@campusconnect-sheets.iam.gserviceaccount.com")
+                  }
+                  className="neon-button"
+                  style={{ padding: "4px 8px", fontSize: "12px" }}
+                >
+                  Copy
+                </button>
+              </div>
+
+              {/* Google Sheet Link Input */}
+              <p style={{ fontSize: "12px", marginTop: "-4px", color: "#ccc" }}>
+                Paste the Google Sheet link (linked to your form)
+              </p>
+              <input
+                type="url"
+                placeholder="Google Sheet Link"
+                value={googleSheetLink}
+                onChange={(e) => setGoogleSheetLink(e.target.value)}
+                className="input-area"
+              />
+
               <div className="modal-buttons">
                 <button
                   type="submit"
@@ -315,7 +375,6 @@ export default function ClubDashboard() {
           </div>
         </div>
       )}
-
       {/* Features Panel Slide-in */}
       {showFeaturesPanel && (
         <FeaturesPanel
