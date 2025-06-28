@@ -42,3 +42,7 @@ client/dist/
 # Ignore OS generated files
 Thumbs.db
 ehthumbs.db
+
+credentials.json
+uploads/
+seed/

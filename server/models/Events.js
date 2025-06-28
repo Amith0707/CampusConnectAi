@@ -44,6 +44,10 @@ const eventSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  googleSheetLink: {
+  type: String,
+  required: true,
+  },
 });
 
 const Event = mongoose.model('Event', eventSchema);

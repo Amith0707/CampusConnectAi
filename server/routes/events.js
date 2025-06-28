@@ -8,7 +8,7 @@ router.post('/', async (req, res) => {
   console.log("Incoming event creation request...");
 
   try {
-    const { clubName, title, description, interests, freeOrPaid, postedAt,entryFee,googleFormLink } = req.body;
+    const { clubName, title, description, interests, freeOrPaid, postedAt,entryFee,googleFormLink,googleSheetLink } = req.body;
     console.log("Request body:", req.body);
 
     if (!clubName || !title || !description || !interests || !freeOrPaid || !googleFormLink) {
@@ -28,6 +28,10 @@ router.post('/', async (req, res) => {
     if (!googleFormPattern.test(googleFormLink)) {
       return res.status(400).json({ message: "Invalid Google Form link provided." });
     }
+    const googleSheetPattern = /^https:\/\/docs\.google\.com\/spreadsheets\/.+$/;
+    if (!googleSheetPattern.test(googleSheetLink)) {
+      return res.status(400).json({ message: "Invalid Google Sheet link provided." });
+    }
     const newEvent = new Event({
       clubName,
       title,
@@ -37,7 +41,8 @@ router.post('/', async (req, res) => {
       postedAt: postedAt || new Date(),
       //skipped doing isRegistrationOpen:true coz will be done by user
       entryFee:freeOrPaid ==="paid" ?entryFee:0,
-      googleFormLink
+      googleFormLink,
+      googleSheetLink
     });
 
     console.log("Saving event to DB...");

@@ -11,7 +11,7 @@ import clubContentRoutes from './routes/clubContentRoutes.js';
 import sentimentRoutes from './routes/sentimentRoutes.js';
 
 import eventRoutes from './routes/events.js';
-
+import receiptVerifyRoute from './routes/receiptVerify.js';
 // Load environment variables
 dotenv.config();
 
@@ -39,7 +39,7 @@ app.use('/api/sentiment', sentimentRoutes);     // Feedback sentiment analysis
 app.use('/api/events', eventRoutes);
 // Serve uploaded static files
 app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
-
+app.use('/api/verify-receipt', receiptVerifyRoute);
 //  Testing routes incase some loading fails in backend :)
 app.get('/', (req, res) => {
   res.send(' CampusConnect AI Backend is running!');

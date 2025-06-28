@@ -12,3 +12,7 @@ pillow
 python-dotenv
 tqdm
 joblib
+# added google sheet libarires needed it's installed 
+gspread
+oauth2client
+gspread-formatting
