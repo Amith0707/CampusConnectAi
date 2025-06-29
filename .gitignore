@@ -47,3 +47,7 @@ credentials.json
 uploads/
 seed/
 scripts
+
+#Removing artifacts folder
+server/utils//server/artifacts/
+*.pkl

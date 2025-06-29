@@ -4,20 +4,23 @@ import LoadingScreen from './LoadingScreen'; //  Use loading animation directly
 import './ParticipantAuth.css';
 
 const interestsList = [
-  "Tech","Sports","Music","Art","Coding","Gaming","Literature","Photography","Travel","Science","Cultural","Fun","Talks",
+  "Tech", "Sports", "Music", "Art", "Coding", "Gaming", "Literature", "Photography", "Travel", "Science", "Cultural", "Fun", "Talks",
+];
+const dept = [
+  "AIML", "CSE", "ISE", "ECE", "EEE", "ME", "DS", "MBA", "BBA",
 ];
 
 const ParticipantSignup = () => {
   const [formData, setFormData] = useState({
     name: '',
-    usn:'',
+    usn: '',
     email: '',
     password: '',
     department: '',
   });
   const [selectedInterests, setSelectedInterests] = useState([]);
   const [error, setError] = useState('');
-  const [isLoading, setIsLoading] = useState(false); //  New loading state
+  const [isLoading, setIsLoading] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const navigate = useNavigate();
   const dropdownRef = useRef(null);
@@ -53,8 +56,13 @@ const ParticipantSignup = () => {
       return;
     }
 
+    if (!formData.department) {
+      setError('Please select a department');
+      return;
+    }
+
     try {
-      setIsLoading(true); //  Start loading
+      setIsLoading(true);
 
       const res = await fetch('http://localhost:5000/api/auth/register', {
         method: 'POST',
@@ -68,19 +76,18 @@ const ParticipantSignup = () => {
         localStorage.setItem('participantId', data._id);
         setTimeout(() => {
           navigate('/participant-dashboard');
-        }, 1500); // Just to let loading screen show briefly
+        }, 1500);
       } else {
         setError(data.message || 'Signup failed');
-        setIsLoading(false); // Stop loading on failure
+        setIsLoading(false);
       }
     } catch (err) {
       console.error('Error during signup:', err);
       setError('Something went wrong. Please try again.');
-      setIsLoading(false); //  Stop loading on failure
+      setIsLoading(false);
     }
   };
 
-  //  Loading animation render
   if (isLoading) {
     return <LoadingScreen />;
   }
@@ -90,7 +97,8 @@ const ParticipantSignup = () => {
       <div className="auth-box">
         <h2 className="auth-title">Participant Sign Up</h2>
         <form onSubmit={handleSubmit}>
-          {['name','usn', 'email', 'password', 'department'].map((field) => (
+                    
+          {['name', 'usn', 'email', 'password'].map((field) => (
             <div className="auth-group" key={field}>
               <label>{field[0].toUpperCase() + field.slice(1)}</label>
               <input
@@ -103,7 +111,22 @@ const ParticipantSignup = () => {
               />
             </div>
           ))}
-
+          <div className="auth-group">
+            <label>Department</label>
+            <select
+              name="department"
+              className="auth-input"
+              value={formData.department}
+              onChange={handleChange}
+              required
+            >
+              <option value="">Select Department</option>
+              {dept.map((d) => (
+                <option key={d} value={d}>{d}</option>
+              ))}
+            </select>
+          </div>
+          {/* Interests */}
           <div className="auth-group" ref={dropdownRef}>
             <label>Interests (pick at least 2)</label>
             <div

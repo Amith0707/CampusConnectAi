@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./FeaturesPanel.css";
 import SentimentPopup from "../../components/SentimentPopup";
 
-const branches = ["CSE", "AIML", "ECE", "EE", "ISE", "ME", "BCA", "MBA"];
+const branches = ["AIML", "CSE", "ISE", "ECE", "EEE", "ME", "DS", "MBA", "BBA",];
 const interests = [
   "Tech", "Sports", "Music", "Art", "Coding", "Gaming",
   "Literature", "Photography", "Travel", "Science", "Cultural", "Fun", "Talks"
@@ -98,17 +98,45 @@ const FeaturesPanel = ({ onClose, clubName }) => {
       alert("Could not update registration status.");
     }
   };
+  const handlePredict = async () => {
+    const { branches, interests } = predictionForm;
+
+    if (branches.length === 0 || interests.length === 0) {
+      alert("Please select at least one branch and one interest.");
+      return;
+    }
+
+    try {
+      const res = await fetch("http://localhost:5000/api/predict-participation", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ branches, interests }),
+      });
+
+      const result = await res.json();
+
+      if (res.ok) {
+        alert(`📈 Estimated participants: ${result.estimatedParticipants} out of ${result.totalSimulated}`);
+      } else {
+        alert("Prediction failed. Try again.");
+        console.error(result);
+      }
+    } catch (err) {
+      console.error("Prediction error:", err);
+      alert("Something went wrong. Check console.");
+    }
+  };
 
   return (
     <div className="features-panel">
       <div className="features-header">
-        <h2>⚙️ Features</h2>
+        <h2> Features</h2>
         <button className="close-btn" onClick={onClose}>✖</button>
       </div>
 
       {/* Feedback Analysis */}
       <div className="feature-section">
-        <h3>📊 Feedback Analysis</h3>
+        <h3> Feedback Analysis</h3>
         {events.map((event) => (
           <label key={event._id} className="radio-option">
             <input
@@ -134,7 +162,7 @@ const FeaturesPanel = ({ onClose, clubName }) => {
           className="dropdown-header"
           onClick={() => setShowParticipation(!showParticipation)}
         >
-          📈 Predict Participation {showParticipation ? "▲" : "▼"}
+           Predict Participation {showParticipation ? "▲" : "▼"}
         </h3>
         {showParticipation && (
           <div className="form-group">
@@ -183,7 +211,7 @@ const FeaturesPanel = ({ onClose, clubName }) => {
             </div>
             <button
               className="neon-button"
-              onClick={() => alert("Prediction feature coming soon!")}
+              onClick={handlePredict}
             >
               Predict
             </button>
