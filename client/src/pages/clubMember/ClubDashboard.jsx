@@ -57,6 +57,7 @@ export default function ClubDashboard() {
 
   // Event Modal states
   const [showEventModal, setShowEventModal] = useState(false);
+  // const [stateVariable, setStateVariable] = useState(initialValue);
   const [eventTitle, setEventTitle] = useState("");
   const [eventDesc, setEventDesc] = useState("");
   const [eventInterests, setEventInterests] = useState([]); // changed to array
@@ -110,6 +111,7 @@ export default function ClubDashboard() {
       }
 
       alert("Announcement submitted successfully!");
+      //resetting
       setAnnouncement("");
       setTitle("");
     } catch (error) {
@@ -118,10 +120,11 @@ export default function ClubDashboard() {
   };
 
   const openEventModal = () => {
-    setShowEventModal(true);
+    setShowEventModal(true);//opens up the registrations
   };
 
   const closeEventModal = () => {
+    //close the registration and sets the value to intial variable
     if (!eventPosting) {
       setShowEventModal(false);
       setEventTitle("");

@@ -37,7 +37,7 @@ const eventSchema = new mongoose.Schema({
     default: false,
   },
   entryFee: {
-    type: Number,
+    type: Number, 
     default: 0,
   },
   googleFormLink: {
@@ -48,6 +48,15 @@ const eventSchema = new mongoose.Schema({
   type: String,
   required: true,
   },
+  date: {
+    type: Date, 
+  },
+  time: {
+    type: String, 
+  },
+  venue: {
+    type: String, 
+  },  
 });
 
 const Event = mongoose.model('Event', eventSchema);
