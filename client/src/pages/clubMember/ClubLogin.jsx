@@ -32,30 +32,33 @@ const ClubLogin = () => {
   };
 
   return (
-    <div className="club-login-container">
-      <h2 className="club-login-heading">Club Member Login</h2>
-      <form onSubmit={handleLogin} className="club-login-form">
-        <input
-          type="text"
-          placeholder="Enter your USN"
-          value={usn}
-          onChange={(e) => setUsn(e.target.value)}
-          required
-          className="club-login-input"
-        />
-        <input
-          type="password"
-          placeholder="Enter your Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-          className="club-login-input"
-        />
-        {error && <p className="club-login-error">{error}</p>}
-        <button type="submit" className="club-login-button">Login</button>
-      </form>
+    <div className="club-login-fullpage">
+      <div className="club-login-container">
+        <h2 className="club-login-heading">Club Member Login</h2>
+        <form onSubmit={handleLogin} className="club-login-form">
+          <input
+            type="text"
+            placeholder="Enter your USN"
+            value={usn}
+            onChange={(e) => setUsn(e.target.value)}
+            required
+            className="club-login-input"
+          />
+          <input
+            type="password"
+            placeholder="Enter your Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+            className="club-login-input"
+          />
+          {error && <p className="club-login-error">{error}</p>}
+          <button type="submit" className="club-login-button">Login</button>
+        </form>
+      </div>
     </div>
   );
+
 };
 
 export default ClubLogin;

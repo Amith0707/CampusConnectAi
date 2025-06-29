@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './ParticipantDashboard.css';
 
-const ALL_INTERESTS = ['Tech', 'Sports', 'Music', 'Art', 'Coding', 'Gaming', 'Literature', 'Photography', 'Travel', 'Science','Cultural'];
+const ALL_INTERESTS = ['Tech', 'Sports', 'Music', 'Art', 'Coding', 'Gaming', 'Literature', 'Photography', 'Travel', 'Science','Cultural','Fun','Talks'];
 
 const ParticipantDashboard = () => {
   const [participantData, setParticipantData] = useState(null);

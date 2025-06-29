@@ -73,3 +73,77 @@
   font-size: 0.9rem;
   cursor: pointer;
 }
+.radio-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  padding: 6px 10px;
+  background-color: #1e1e1e;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+
+.radio-option input[type="radio"] {
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border: 2px solid #00ffab;
+  border-radius: 50%;
+  position: relative;
+  top: 1px;
+  background-color: transparent;
+  cursor: pointer;
+  outline: none;
+}
+
+.radio-option input[type="radio"]:checked::before {
+  content: '';
+  display: block;
+  width: 8px;
+  height: 8px;
+  background: #00ffab;
+  border-radius: 50%;
+  position: absolute;
+  top: 3px;
+  left: 3px;
+}
+
+
+/*fixing manage registrations ka checkbox thingy*/
+.checkbox-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  padding: 6px 10px;
+  background-color: #1e1e1e;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+
+.checkbox-option input[type="checkbox"] {
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border: 2px solid #00ffab;
+  border-radius: 4px;
+  background-color: transparent;
+  position: relative;
+  top: 1px;
+  cursor: pointer;
+}
+
+.checkbox-option input[type="checkbox"]:checked::before {
+  content: '';
+  display: block;
+  width: 8px;
+  height: 8px;
+  background: #00ffab;
+  position: absolute;
+  top: 3px;
+  left: 3px;
+}
+
