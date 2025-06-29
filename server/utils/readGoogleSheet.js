@@ -5,7 +5,7 @@ import Event from "../models/Events.js";
 import { logParticipation } from "./logParticipation.js";
 
 export async function readSheetAndLogParticipants(eventTitle, sheetId) {
-  console.log(`📄 Reading sheet for free event: ${eventTitle}`);
+  console.log(`Reading sheet for free event: ${eventTitle}`);
 
   try {
     const auth = new google.auth.GoogleAuth({
@@ -23,7 +23,7 @@ export async function readSheetAndLogParticipants(eventTitle, sheetId) {
 
     const rows = res.data.values;
     if (!rows || rows.length === 0) {
-      console.warn("❌ Sheet is empty or inaccessible.");
+      console.warn("Sheet is empty or inaccessible.");
       return;
     }
 
@@ -31,13 +31,13 @@ export async function readSheetAndLogParticipants(eventTitle, sheetId) {
     const usnIndex = headers.findIndex(h => h.includes("usn"));
 
     if (usnIndex === -1) {
-      console.warn("❌ USN column not found in sheet.");
+      console.warn(" USN column not found in sheet.");
       return;
     }
 
     const event = await Event.findOne({ title: eventTitle });
     if (!event) {
-      console.warn("❌ Event not found in DB.");
+      console.warn(" Event not found in DB.");
       return;
     }
 
@@ -54,8 +54,8 @@ export async function readSheetAndLogParticipants(eventTitle, sheetId) {
       successCount++;
     }
 
-    console.log(`✅ Logged ${successCount} participants for free event: ${eventTitle}`);
+    console.log(` Logged ${successCount} participants for free event: ${eventTitle}`);
   } catch (err) {
-    console.error("❌ Error reading Google Sheet:", err.message);
+    console.error(" Error reading Google Sheet:", err.message);
   }
 }
