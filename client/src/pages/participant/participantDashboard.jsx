@@ -84,6 +84,11 @@ const ParticipantDashboard = () => {
                   <h4 className="event-club-name">{event.clubName}</h4>
                   <h3 className="event-title">{event.title}</h3>
                   <p className="event-description">{event.description}</p>
+                  <p className="event-meta">
+                    📅 {event.date ? new Date(event.date).toLocaleDateString("en-IN") : "TBA"} &nbsp; | &nbsp;
+                    ⏰ {event.time || "TBA"} &nbsp; | &nbsp;
+                    📍 {event.venue || "TBA"}
+                  </p>
                   <div className="event-tags">
                     {event.interests?.map((tag, i) => (
                       <span key={i} className="event-tag">{tag}</span>
@@ -91,7 +96,9 @@ const ParticipantDashboard = () => {
                   </div>
                   <div className="event-bottom">
                     <span className={`event-badge ${event.freeOrPaid === 'free' ? 'free' : 'paid'}`}>
-                      {event.freeOrPaid?.toUpperCase() || 'UNKNOWN'}
+                      {event.freeOrPaid==='paid'
+                        ?`Paid-₹${event.entryFee}`
+                        :'Free'}
                     </span>
                     <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
                       {/* <button className="register-btn">Register</button> */}

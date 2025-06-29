@@ -66,6 +66,9 @@ export default function ClubDashboard() {
   const [googleSheetLink, setGoogleSheetLink] = useState("");//added new
 
   const [entryFee, setEntryFee] = useState("");//added this entry fee 
+  const [eventDate, setEventDate] = useState('');
+  const [eventTime, setEventTime] = useState('');
+  const [eventVenue, setEventVenue] = useState('');
 
   // New state to control FeaturesPanel visibility
   const [showFeaturesPanel, setShowFeaturesPanel] = useState(false);
@@ -127,6 +130,9 @@ export default function ClubDashboard() {
       setEventType("free");
       setEntryFee("");//added
       setGoogleFormLink("");//added google form link
+      setEventDate('');
+      setEventTime('');
+      setEventVenue('');
     }
   };
 
@@ -157,6 +163,9 @@ export default function ClubDashboard() {
           entryFee:eventType==="paid"? entryFee:0,
           googleFormLink,
           googleSheetLink,
+          date: eventDate,
+          time: eventTime,
+          venue: eventVenue,
         }),
       });
 
@@ -272,7 +281,29 @@ export default function ClubDashboard() {
                 rows={4}
                 className="input-area"
               />
-
+              {/*Adding venue date and time*/}
+              <input
+                type="date"
+                placeholder="Event Date"
+                value={eventDate}
+                onChange={(e) => setEventDate(e.target.value)}
+                className="input-area"
+              />
+              <input
+                type="time"
+                placeholder="Event Time"
+                value={eventTime}
+                onChange={(e) => setEventTime(e.target.value)}
+                className="input-area"
+              />
+              <input
+                type="text"
+                placeholder="Event Venue"
+                value={eventVenue}
+                onChange={(e) => setEventVenue(e.target.value)}
+                className="input-area"
+              />              
+              
               {/* Multi-select dropdown for interests */}
               <label htmlFor="event-interests" className="select-label">
                 Select Interests (hold Ctrl or Cmd to select multiple)

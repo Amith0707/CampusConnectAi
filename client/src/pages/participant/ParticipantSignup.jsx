@@ -10,6 +10,7 @@ const interestsList = [
 const ParticipantSignup = () => {
   const [formData, setFormData] = useState({
     name: '',
+    usn:'',
     email: '',
     password: '',
     department: '',
@@ -89,7 +90,7 @@ const ParticipantSignup = () => {
       <div className="auth-box">
         <h2 className="auth-title">Participant Sign Up</h2>
         <form onSubmit={handleSubmit}>
-          {['name', 'email', 'password', 'department'].map((field) => (
+          {['name','usn', 'email', 'password', 'department'].map((field) => (
             <div className="auth-group" key={field}>
               <label>{field[0].toUpperCase() + field.slice(1)}</label>
               <input
