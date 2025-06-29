@@ -8,10 +8,10 @@ router.post('/', async (req, res) => {
   console.log("Incoming event creation request...");
 
   try {
-    const { clubName, title, description, interests, freeOrPaid, postedAt,entryFee,googleFormLink,googleSheetLink } = req.body;
+    const { clubName, title, description, interests, freeOrPaid, postedAt,entryFee,googleFormLink,googleSheetLink,date,time,venue } = req.body;
     console.log("Request body:", req.body);
 
-    if (!clubName || !title || !description || !interests || !freeOrPaid || !googleFormLink) {
+    if (!clubName || !title || !description || !interests || !freeOrPaid || !googleFormLink || !date || !time || !venue) {
       console.log("Missing fields in request");
       return res.status(400).json({ message: "Missing required fields." });
     }
@@ -42,7 +42,8 @@ router.post('/', async (req, res) => {
       //skipped doing isRegistrationOpen:true coz will be done by user
       entryFee:freeOrPaid ==="paid" ?entryFee:0,
       googleFormLink,
-      googleSheetLink
+      googleSheetLink,
+      date,time,venue,
     });
 
     console.log("Saving event to DB...");

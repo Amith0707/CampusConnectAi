@@ -5,7 +5,8 @@ import jwt from 'jsonwebtoken';
 
 // ✅ Register Participant
 export const registerParticipant = async (req, res) => {
-  const { name, email, password, department, interests } = req.body;
+  const { name, email, password, department, interests, usn } = req.body;
+
   console.log('[registerParticipant] 📥 Request body:', req.body);
 
   try {
@@ -22,6 +23,7 @@ export const registerParticipant = async (req, res) => {
       password: hashedPassword,
       department,
       interests,
+      usn: usn.toUpperCase().trim() // to ensure clean format i've add this
     });
 
     await newParticipant.save();
@@ -34,6 +36,7 @@ export const registerParticipant = async (req, res) => {
       email,
       department,
       interests,
+      usn: newParticipant.usn
     });
   } catch (error) {
     console.error('[registerParticipant] ❌ Signup error:', error);
@@ -43,14 +46,14 @@ export const registerParticipant = async (req, res) => {
 
 // ✅ Login Participant + Recommended Events
 export const loginParticipant = async (req, res) => {
-  const { email, password } = req.body;
+  const { email, password,usn } = req.body;
   console.log('[loginParticipant] 📥 Request body:', req.body);
 
   try {
-    const user = await Participant.findOne({ email });
+    const user = await Participant.findOne({email,usn});//added usn
     if (!user) {
       console.log('[loginParticipant] ❌ User not found');
-      return res.status(400).json({ message: 'Invalid email or password' });
+      return res.status(400).json({ message: 'Invalid email or password or usn' });
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
@@ -60,7 +63,7 @@ export const loginParticipant = async (req, res) => {
     }
 
     const token = jwt.sign(
-      { userId: user._id, email: user.email, name: user.name },
+      { userId: user._id, email: user.email, name: user.name ,usn:user.usn},
       process.env.JWT_SECRET,
       { expiresIn: '7d' }
     );
@@ -75,6 +78,7 @@ export const loginParticipant = async (req, res) => {
       name: user.name,
       interests: user.interests || [],
       department: user.department,
+      usn:user.usn,//added for safety
       recommendedEvents,
     });
   } catch (error) {
@@ -107,6 +111,7 @@ export const updateParticipantInterests = async (req, res) => {
         name: updatedUser.name,
         email: updatedUser.email,
         interests: updatedUser.interests,
+        usn:updatedUser.usn
       },
     });
   } catch (error) {
@@ -127,6 +132,7 @@ export const getParticipantById = async (req, res) => {
     res.status(200).json({
       _id: user._id,
       name: user.name,
+      usn:user.usn,
       email: user.email,
       department: user.department,
       interests: user.interests || [],

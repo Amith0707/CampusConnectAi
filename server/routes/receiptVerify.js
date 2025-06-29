@@ -77,6 +77,12 @@ router.post("/", upload.single("receipt"), async (req, res) => {
         console.log("Updating Google Sheet...");
         await updateGoogleSheet(sheetLink, usn, isValid ? "Verified" : "Invalid");
         console.log("Google Sheet updated successfully");
+        //Important for tracking user past event there or not
+        if (isValid) {
+          const { logParticipation } = await import("../utils/logParticipation.js");
+          console.log("📥 Logging participation for:", usn, event.title);
+          await logParticipation(usn, event.title);
+        }
 
         return res.status(200).json({
           message: isValid ? "Receipt verified successfully" : "Invalid receipt amount",
