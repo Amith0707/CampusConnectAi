@@ -4,6 +4,7 @@ import './ParticipantAuth.css';
 
 const ParticipantLogin = () => {
   const [email, setEmail] = useState('');
+  const [usn, setUsn] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
@@ -12,17 +13,18 @@ const ParticipantLogin = () => {
 
     console.log('[Login] Form submit triggered');
     console.log('[Login] Current email:', email);
+    console.log('[Login] USN:', usn);
     console.log('[Login] Current password:', password ? '******' : '(empty)');
 
-    if (!email || !password) {
+    if (!email|| !usn || !password) {
       console.warn('[Login] Missing email or password');
-      alert('Please enter both email and password');
+      alert('Please enter  email,USN and password');
       return;
     }
 
     console.log('[Login] Navigating to /loading with loginData state...');
     navigate('/loading', {
-      state: { loginData: { email, password } },
+      state: { loginData: { email,usn, password } },
     });
   };
 
@@ -45,6 +47,19 @@ const ParticipantLogin = () => {
               required
             />
           </div>
+
+          <div className="auth-group">
+            <label>USN</label>
+            <input
+              type="text"
+              className="auth-input"
+              placeholder="Enter USN"
+              value={usn}
+              onChange={(e) => setUsn(e.target.value)}
+              required
+            />
+          </div>
+
           <div className="auth-group">
             <label>Password</label>
             <input
